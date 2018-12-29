@@ -8,7 +8,34 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
 
-    </Grid>
+
+    <StackPanel Margin="20">
+        <StackPanel.Background>
+            <ImageBrush/>
+        </StackPanel.Background>
+        <PersonPicture
+            DisplayName=""
+            Initials=""
+            Foreground="White"
+            Opacity="0.5"
+            Margin="10"/>
+        <TextBlock Text="Sign in with your account" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Margin="100,8,100,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <SymbolIcon Symbol="Mail" HorizontalAlignment="Right" Grid.Row="0"/>
+            <TextBox x:Name="Email" PlaceholderText="Email" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0"/>
+            <SymbolIcon Symbol="Permissions" HorizontalAlignment="Right" Grid.Row="1"/>
+            <PasswordBox x:Name="Password" PlaceholderText="Password" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="1"/>
+            <CheckBox Content="Remember Me" Grid.Row="2" Margin="2"/>
+            <Button Content="Login" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="AliceBlue" Background="MediumSeaGreen" Width="324" Grid.Row="3" Click="Button_submit" Margin="0,0,0,0" />
+
+        </Grid>
+    </StackPanel>
 </Page>

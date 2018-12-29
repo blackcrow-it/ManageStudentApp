@@ -37,5 +37,4 @@ namespace ManageStudentApp.Entity
         public string status { get => _status; set => _status = value; }
     }
 }
-    }
-}
+   

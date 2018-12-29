@@ -11,7 +11,7 @@
     <Grid>
         <StackPanel Margin="0,0,0,-306">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
-                <Button Foreground="AliceBlue" Background="MediumSeaGreen" Click="Go_editInformation" Height="32" Width="152">
+                <Button Foreground="AliceBlue" Background="MediumSeaGreen"  Height="32" Width="152">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Symbol="Edit" Margin="0,0,5,0"/>
                         <TextBlock>Edit Information</TextBlock>

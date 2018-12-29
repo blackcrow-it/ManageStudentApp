@@ -8,7 +8,47 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <ScrollViewer>
+        <StackPanel Margin="100,8,100,0">
+            <TextBlock Text="Edit Information" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="MediumSeaGreen" FontSize="25" FontWeight="ExtraLight" Margin="10"/>
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="FirstName" PlaceholderText="First Name" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0" Grid.Column="0" Margin="0,0,10,0"/>
+                    <TextBlock x:Name="firstName" Visibility="Collapsed" Foreground="Red" Grid.Row="1" Grid.Column="0" Margin="5,20,0,0"/>
+                    <TextBox x:Name="LastName" PlaceholderText="Last Name" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0" Grid.Column="1"  Margin="10,0,0,0"/>
+                    <TextBlock x:Name="lastName" Visibility="Collapsed" Foreground="Red" Grid.Row="1" Grid.Column="1" Margin="5,20,0,0"/>
+                </Grid>
+                <TextBox x:Name="Phone" PlaceholderText="Phone Number" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" />
+                <TextBlock x:Name="phone" Visibility="Collapsed" Foreground="Red" Margin="5,20,0,0"/>
+                <TextBox x:Name="Email" PlaceholderText="Email" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
+                <TextBlock x:Name="email" Visibility="Collapsed" Foreground="Red" Margin="5,20,0,0"/>
+                <PasswordBox x:Name="PassWord" PlaceholderText="Password" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
+                <TextBlock x:Name="password" Visibility="Collapsed" Foreground="Red" Margin="5,20,0,0"/>
+                <TextBox x:Name="AvatarUrl" PlaceholderText="AvatarUrl" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
+                <Image x:Name="Avatar" Width="150" Height="150" HorizontalAlignment="Left" Margin="0,10,0,0" />
+                <Button Content="Capture Your Photo" Foreground="AliceBlue" Background="MediumSeaGreen" Margin="0,10,0,0" Click="Choose_Image"/>
+                <TextBox x:Name="Address" PlaceholderText="Address" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" AcceptsReturn="True" Height= "55"  />
+                <TextBox x:Name="Introduction" PlaceholderText="Introduction" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" AcceptsReturn="True" Height= "55" Margin="0,0,0,30"/>
+                <CalendarDatePicker x:Name="BirthdayPicker" Header="Birthday" Foreground="Gray" DateChanged="BirthdayPicker_DateChanged"/>
+                <TextBlock Text="Gender" Foreground="Gray"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Male" Tag="1" Checked="RadioButton_Checked"/>
+                    <RadioButton Content="Female" Tag="0" />
+                    <RadioButton Content="Other" Tag="2" IsChecked="True" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <Button x:Name="doSubmit" Content="Submit" Foreground="AliceBlue" Background="MediumSeaGreen" Margin="0,0,10,0" Click="doSubmit_Click"/>
+                    <Button x:Name="doReset" Content="Reset" Foreground="AliceBlue" Background="MediumSeaGreen" Click="doReset_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
