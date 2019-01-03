@@ -56,7 +56,7 @@ namespace ManageStudentApp.View
                 StorageFile storageFile = await folder.CreateFileAsync("token.txt", CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(storageFile, responseContent);
                 var rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(MainPage));
+                rootFrame.Navigate(typeof(View.Information));
 
             }
             else
@@ -78,47 +78,47 @@ namespace ManageStudentApp.View
             }
         }
 
-        public static async void DoLogin()
-        {
-            // Auto login nếu tồn tại file token 
-            currentLogin = new Student();
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            if (await folder.TryGetItemAsync("token.txt") != null)
-            {
-                StorageFile file = await folder.GetFileAsync("token.txt");
-                var tokenContent = await FileIO.ReadTextAsync(file);
+        //public static async void DoLogin()
+        //{
+        //    // Auto login nếu tồn tại file token 
+        //    currentLogin = new Student();
+        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
+        //    if (await folder.TryGetItemAsync("token.txt") != null)
+        //    {
+        //        StorageFile file = await folder.GetFileAsync("token.txt");
+        //        var tokenContent = await FileIO.ReadTextAsync(file);
 
-                TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(tokenContent);
+        //        TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(tokenContent);
 
-                // Lay thong tin ca nhan bang token.
-                HttpClient client2 = new HttpClient();
-                client2.DefaultRequestHeaders.Add("Authorization", "Basic " + token.Token);
-                var resp = client2.GetAsync(APIUrl.MEMBER_INFORMATION).Result;
-                Debug.WriteLine(await resp.Content.ReadAsStringAsync());
-                var userInfoContent = await resp.Content.ReadAsStringAsync();
+        //        // Lay thong tin ca nhan bang token.
+        //        HttpClient client2 = new HttpClient();
+        //        client2.DefaultRequestHeaders.Add("Authorization", "Basic " + token.Token);
+        //        var resp = client2.GetAsync(APIUrl.MEMBER_INFORMATION).Result;
+        //        Debug.WriteLine(await resp.Content.ReadAsStringAsync());
+        //        var userInfoContent = await resp.Content.ReadAsStringAsync();
 
-                Student userInfoJson = JsonConvert.DeserializeObject<Student>(userInfoContent);
+        //        Student userInfoJson = JsonConvert.DeserializeObject<Student>(userInfoContent);
 
-                currentLogin.firstName = userInfoJson.firstName;
-                currentLogin.lastName = userInfoJson.lastName;
-                currentLogin.phone = userInfoJson.phone;
-                currentLogin.address = userInfoJson.address;
-                currentLogin.introduction = userInfoJson.introduction;
-                currentLogin.gender = userInfoJson.gender;
-                currentLogin.birthday = userInfoJson.birthday;
-                currentLogin.email = userInfoJson.email;
-                currentLogin.password = userInfoJson.password;
-                currentLogin.status = userInfoJson.status;
-                var rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(MainPage));
+        //        currentLogin.firstName = userInfoJson.firstName;
+        //        currentLogin.lastName = userInfoJson.lastName;
+        //        currentLogin.phone = userInfoJson.phone;
+        //        currentLogin.address = userInfoJson.address;
+        //        currentLogin.introduction = userInfoJson.introduction;
+        //        currentLogin.gender = userInfoJson.gender;
+        //        currentLogin.birthday = userInfoJson.birthday;
+        //        currentLogin.email = userInfoJson.email;
+        //        currentLogin.password = userInfoJson.password;
+        //        currentLogin.status = userInfoJson.status;
+        //        var rootFrame = Window.Current.Content as Frame;
+        //        rootFrame.Navigate(typeof(MainPage));
 
 
-                Debug.WriteLine("Đã đăng nhập thành công");
-            }
-            else
-            {
-                Debug.WriteLine("Vui lòng đăng nhập lại");
-            }
-        }
+        //        Debug.WriteLine("Đã đăng nhập thành công");
+        //    }
+        //    else
+        //    {
+        //        Debug.WriteLine("Vui lòng đăng nhập lại");
+        //    }
+        //}
     }
 }

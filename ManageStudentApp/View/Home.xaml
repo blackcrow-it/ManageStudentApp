@@ -9,23 +9,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="Nav_Menu" IsBackButtonVisible="Collapsed" ItemInvoked="Nav_Menu_ItemInvoked" Margin="0 12 0 0" IsTabStop="True" IsSettingsVisible="False">
-            <NavigationView.Header>
-                <TextBlock x:Name="Content_Header" Style="{ThemeResource HeaderTextBlockStyle}"/>
-            </NavigationView.Header>
+        <NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" Header="Welcome" AlwaysShowHeader="False">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Tag="Home">
-                    <TextBlock Tag="Nav_Home">Home</TextBlock>
-                </NavigationViewItem>
-                <NavigationViewItem Icon="MusicInfo" Tag="Login">
-                    <TextBlock Tag="Nav_Login">Login</TextBlock>
-                </NavigationViewItem>
-                <NavigationViewItem Icon="Contact" Tag="Information">
-                    <TextBlock Tag="Nav_Infor">Information</TextBlock>
-                </NavigationViewItem>
+                <NavigationViewItemHeader Content="Man-made"/>
+                <NavigationViewItem Icon="AddFriend" Content="Login" Tag="login"/>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="Natural"/>
+                <NavigationViewItem Icon="BlockContact" Content="Information" Tag="Information"/>
+                <NavigationViewItem Icon="Page2" Content="Mark" Tag="Mark"/>
             </NavigationView.MenuItems>
-            <Frame x:Name="contentFrame"></Frame>
-        </NavigationView>
 
+            <NavigationView.AutoSuggestBox>
+                
+                <AutoSuggestBox x:Name="ASB" QueryIcon="Find"/>
+            </NavigationView.AutoSuggestBox>
+
+            <Frame x:Name="ContentFrame">
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame>
+        </NavigationView>
     </Grid>
 </Page>

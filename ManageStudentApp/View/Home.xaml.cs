@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,42 +25,30 @@ namespace ManageStudentApp.View
         public Home()
         {
             this.InitializeComponent();
+            // string appName = Windows.ApplicationModel.Package.Current.DisplayName;
+            // AppTitle.Text = appName;
+
         }
-        //private void Nav_Menu_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    foreach (NavigationViewItemBase item in Nav_Menu.MenuItems)
-        //    {
-        //        if (item is NavigationViewItem && item.Tag.ToString() == "Home")
-        //        {
-        //            Nav_Menu.SelectedItem = item;
-        //            break;
-        //        }
-        //    }
-        //    Content_Header.Text = "Home";
-        //    contentFrame.Navigate(typeof(View.Home));
-        //}
-
-        private void Nav_Menu_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            TextBlock ItemContent = args.InvokedItem as TextBlock;
-            Debug.WriteLine(ItemContent.Tag);
-            if (ItemContent != null)
+            if (args.IsSettingsSelected)
             {
-                switch (ItemContent.Tag)
+                ContentFrame.Navigate(typeof(View.Login));
+            }
+            else
+            {
+                NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+                switch (item.Tag.ToString())
                 {
-                    case "Nav_Home":
-                        Content_Header.Text = "Home";
-                        contentFrame.Navigate(typeof(View.Login));
+                    case "login":
+                        ContentFrame.Navigate(typeof(View.Login));
+                        NavView.Header = "House";
                         break;
-
-                    case "Nav_Login":
-                        Content_Header.Text = "Login";
-                        contentFrame.Navigate(typeof(View.Login));
+                    case "Information":
+                        ContentFrame.Navigate(typeof(View.Information));
                         break;
-
-                    case "Nav_Infor":
-                        Content_Header.Text = "Information";
-                        contentFrame.Navigate(typeof(MainPage));
+                    case "Mark":
+                        ContentFrame.Navigate(typeof(View.Mark));
                         break;
                 }
             }

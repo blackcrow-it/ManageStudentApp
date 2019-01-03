@@ -32,27 +32,70 @@ namespace ManageStudentApp.View
         public Information()
         {
             this.InitializeComponent();
-            LoadStudentInformation();
+            //LoadStudentInformation();
         }
-        private async void LoadStudentInformation()
+        //private async void LoadStudentInformation()
+        //{
+        //    HttpClient httpClient = new HttpClient();
+        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "lMyHzmDDg4vQik4XAmaOap9fy9VsDbH1HP6TMdJUCh3NHexd4rib2ASn05rCPpPG");
+        //    var response = httpClient.GetAsync("");        // cần api
+        //    var content = await response.Result.Content.ReadAsStringAsync();
+        //    Debug.WriteLine(content);
+        //    student = JsonConvert.DeserializeObject<Student>(content);
+        //    Debug.WriteLine(student.email);
+        //    this.txt_fullname.Text = student.firstName + " " + student.lastName;
+        //    this.txt_phone.Text = student.phone;
+        //    this.txt_email.Text = student.email;
+        //    this.txt_birthday.Text = student.birthday;
+        //    this.txt_address.Text = student.address;
+        //    //this.img_avatar.Source = new BitmapImage(new Uri(student.avatar, UriKind.Absolute));
+        //}
+        private async void Edit_Information(object sender, RoutedEventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "lMyHzmDDg4vQik4XAmaOap9fy9VsDbH1HP6TMdJUCh3NHexd4rib2ASn05rCPpPG");
-            var response = httpClient.GetAsync("");        // cần api
-            var content = await response.Result.Content.ReadAsStringAsync();
-            Debug.WriteLine(content);
-            student = JsonConvert.DeserializeObject<Student>(content);
-            Debug.WriteLine(student.email);
-            this.txt_fullname.Text = student.firstName + " " + student.lastName;
-            this.txt_phone.Text = student.phone;
-            this.txt_email.Text = student.email;
-            this.txt_birthday.Text = student.birthday;
-            this.txt_address.Text = student.address;
-            this.img_avatar.Source = new BitmapImage(new Uri(student.avatar, UriKind.Absolute));
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage));
         }
-        private void Go_Rigister(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(MainPage));
-        }
+        //public static async void GetInformation()
+        //{
+        //    // Auto login nếu tồn tại file token 
+        //    currentLogin = new Student();
+        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
+        //    if (await folder.TryGetItemAsync("token.txt") != null)
+        //    {
+        //        StorageFile file = await folder.GetFileAsync("token.txt");
+        //        var tokenContent = await FileIO.ReadTextAsync(file);
+
+        //        TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(tokenContent);
+
+        //        // Lay thong tin ca nhan bang token.
+        //        HttpClient client2 = new HttpClient();
+        //        client2.DefaultRequestHeaders.Add("Authorization", "Basic " + token.Token);
+        //        var resp = client2.GetAsync(APIUrl.MEMBER_INFORMATION).Result;
+        //        Debug.WriteLine(await resp.Content.ReadAsStringAsync());
+        //        var userInfoContent = await resp.Content.ReadAsStringAsync();
+
+        //        Student userInfoJson = JsonConvert.DeserializeObject<Student>(userInfoContent);
+
+        //        currentLogin.firstName = userInfoJson.firstName;
+        //        currentLogin.lastName = userInfoJson.lastName;
+        //        currentLogin.phone = userInfoJson.phone;
+        //        currentLogin.address = userInfoJson.address;
+        //        currentLogin.introduction = userInfoJson.introduction;
+        //        currentLogin.gender = userInfoJson.gender;
+        //        currentLogin.birthday = userInfoJson.birthday;
+        //        currentLogin.email = userInfoJson.email;
+        //        currentLogin.password = userInfoJson.password;
+        //        currentLogin.status = userInfoJson.status;
+        //        var rootFrame = Window.Current.Content as Frame;
+        //        rootFrame.Navigate(typeof(MainPage));
+
+
+        //        Debug.WriteLine("Đã đăng nhập thành công");
+        //    }
+        //    else
+        //    {
+        //        Debug.WriteLine("Vui lòng đăng nhập lại");
+        //    }
+        //}
     }
 }

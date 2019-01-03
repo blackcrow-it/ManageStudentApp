@@ -10,15 +10,22 @@
 
     <Grid>
         <StackPanel Margin="0,0,0,-306">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
-                <Button Foreground="AliceBlue" Background="MediumSeaGreen"  Height="32" Width="152">
-                    <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20" >
+                <Button Foreground="AliceBlue" Background="MediumSeaGreen"  Height="32" Width="152" Click="Edit_Information">
+                    <StackPanel Orientation="Horizontal" >
                         <SymbolIcon Symbol="Edit" Margin="0,0,5,0"/>
                         <TextBlock>Edit Information</TextBlock>
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <Image Width="200" Height="200" x:Name="img_avatar"/>
+            <PersonPicture
+            DisplayName=""
+            Initials=""
+            Foreground="White"
+            Opacity="0.5"
+            Margin="10"/>
+            <TextBlock Text="Tk A" HorizontalAlignment="Center" FontSize="20"/>
+            <!--<Image Width="200" Height="200" x:Name="img_avatar"/>-->
             <Grid Margin="20 20 20 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
