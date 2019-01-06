@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -33,92 +34,86 @@ namespace ManageStudentApp.View
         public Login()
         {
             this.InitializeComponent();
-
+          
         }
 
         private async void Button_submit(object sender, RoutedEventArgs e)
         {
-            Dictionary<string, string> login_handle = new Dictionary<string, string>();
-            login_handle.Add("email", this.Email.Text);
-            login_handle.Add("password", this.Password.Password);
-
-            HttpClient httpClient = new HttpClient();
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(login_handle), System.Text.Encoding.UTF8, "application/json");
-            var response = httpClient.PostAsync(APIUrl.API_LOGIN, stringContent).Result;
-            var responseContent = await response.Content.ReadAsStringAsync();
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            var tb_username = UserName.Text;
+            var tb_password = Password.Password;
+            var httpResponseMessage = APIHandle.Sign_In(tb_username, tb_password);
+            if (httpResponseMessage.Result.StatusCode == HttpStatusCode.OK)
             {
-
-                Debug.WriteLine("Login Success");
-                Debug.WriteLine(responseContent);
-                TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseContent); //read token
-                StorageFolder folder = ApplicationData.Current.LocalFolder;// save token file
-                StorageFile storageFile = await folder.CreateFileAsync("token.txt", CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(storageFile, responseContent);
+                await Handle.Login(tb_username, tb_password);
                 var rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(View.Information));
-
+                rootFrame.Navigate(typeof(View.Home));
+                Debug.WriteLine(httpResponseMessage.Result.StatusCode);
             }
             else
             {
-                ErrorResponse errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(responseContent);
-                if (errorResponse.error.Count > 0)
-                {
-                    foreach (var key in errorResponse.error.Keys)
-                    {
-                        var objectBykey = this.FindName(key);
-                        var value = errorResponse.error[key];
-                        if (objectBykey != null)
-                        {
-                            TextBlock textBlock = objectBykey as TextBlock;
-                            textBlock.Text = "* " + value;
-                        }
-                    }
-                }
+                //var errorJson = await httpResponseMessage.Result.Content.ReadAsStringAsync();
+                //ErrorResponse errResponse = JsonConvert.DeserializeObject<ErrorResponse>(errorJson);
+                //foreach (var errorField in errResponse.error.Keys)
+                //{
+                //    if (this.FindName(errorField) is TextBlock textBlock)
+                //    {
+                //        textBlock.Text = "*" + errResponse.error[errorField];
+                //        //Debug.WriteLine("'" + errorField + "' : '" + errResponse.error[errorField] + "'");
+                //        //textBlock.Visibility = Visibility.Visible;
+                //        //textBlock.Foreground = new SolidColorBrush(Colors.Red);
+                //        //textBlock.FontSize = 10;
+                //        //textBlock.FontStyle = FontStyle.Italic;
+                //    }
+                //}
+                Debug.WriteLine(httpResponseMessage.Result.StatusCode);
+            }
+            if (rememberCheck.IsChecked == true)
+            {
+                await Handle.WriteFile("remember.txt", "true");
+            }
+            else
+            {
+                await Handle.WriteFile("remember.txt", "");
             }
         }
+        public static async void DoLogin()
+        {
+            var token = await Handle.GetToken();
+            if (token != "")
+            {
+                var httpResponseMessage = APIHandle.GetData(APIUrl.MEMBER_INFORMATION, "Basic", token);
+                Debug.WriteLine(httpResponseMessage.Result.StatusCode);
+                if (httpResponseMessage.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    var rootFrame = Window.Current.Content as Frame;
+                    rootFrame.Navigate(typeof(View.Home));
+                }
+                else
+                {
+                    Debug.WriteLine("Chưa có token");
+                }
+            }
+            // Auto login nếu tồn tại file token 
+            //currentLogin = new Student();
+            //StorageFolder folder = ApplicationData.Current.LocalFolder;
+            //if (await folder.TryGetItemAsync("credential.txt") != null)
+            //{
+            //    StorageFile file = await folder.GetFileAsync("credential.txt");
+            //    var tokenContent = await FileIO.ReadTextAsync(file);
+            //    var rootFrame = Window.Current.Content as Frame;
+            //    rootFrame.Navigate(typeof(View.Home));
+            //    Debug.WriteLine("Đã đăng nhập thành công");
+            //}
+            //else
+            //{
+            //    Debug.WriteLine("Vui lòng đăng nhập lại");
+            //}
+        }
 
-        //public static async void DoLogin()
-        //{
-        //    // Auto login nếu tồn tại file token 
-        //    currentLogin = new Student();
-        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
-        //    if (await folder.TryGetItemAsync("token.txt") != null)
-        //    {
-        //        StorageFile file = await folder.GetFileAsync("token.txt");
-        //        var tokenContent = await FileIO.ReadTextAsync(file);
+        private void Sigin_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoLogin();
+        }
 
-        //        TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(tokenContent);
-
-        //        // Lay thong tin ca nhan bang token.
-        //        HttpClient client2 = new HttpClient();
-        //        client2.DefaultRequestHeaders.Add("Authorization", "Basic " + token.Token);
-        //        var resp = client2.GetAsync(APIUrl.MEMBER_INFORMATION).Result;
-        //        Debug.WriteLine(await resp.Content.ReadAsStringAsync());
-        //        var userInfoContent = await resp.Content.ReadAsStringAsync();
-
-        //        Student userInfoJson = JsonConvert.DeserializeObject<Student>(userInfoContent);
-
-        //        currentLogin.firstName = userInfoJson.firstName;
-        //        currentLogin.lastName = userInfoJson.lastName;
-        //        currentLogin.phone = userInfoJson.phone;
-        //        currentLogin.address = userInfoJson.address;
-        //        currentLogin.introduction = userInfoJson.introduction;
-        //        currentLogin.gender = userInfoJson.gender;
-        //        currentLogin.birthday = userInfoJson.birthday;
-        //        currentLogin.email = userInfoJson.email;
-        //        currentLogin.password = userInfoJson.password;
-        //        currentLogin.status = userInfoJson.status;
-        //        var rootFrame = Window.Current.Content as Frame;
-        //        rootFrame.Navigate(typeof(MainPage));
-
-
-        //        Debug.WriteLine("Đã đăng nhập thành công");
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine("Vui lòng đăng nhập lại");
-        //    }
-        //}
     }
 }

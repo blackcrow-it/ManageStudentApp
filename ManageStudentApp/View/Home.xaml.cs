@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ManageStudentApp.Dialog;
+using ManageStudentApp.Service;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,29 +31,55 @@ namespace ManageStudentApp.View
             // AppTitle.Text = appName;
 
         }
+        private void Blog_Home(object sender, RoutedEventArgs e)
+        {
+            // set the initial SelectedItem
+            foreach (NavigationViewItemBase item in NavView.MenuItems)
+            {
+                if (item is NavigationViewItem && item.Tag.ToString() == "Blog Home")
+                {
+                    NavView.SelectedItem = item;
+                    break;
+                }
+            }
+            ContentFrame.Navigate(typeof(View.BlogHome));
+        }
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
-                ContentFrame.Navigate(typeof(View.Login));
+                ContentFrame.Navigate(typeof(View.Home));
             }
             else
             {
                 NavigationViewItem item = args.SelectedItem as NavigationViewItem;
                 switch (item.Tag.ToString())
                 {
-                    case "login":
-                        ContentFrame.Navigate(typeof(View.Login));
-                        NavView.Header = "House";
-                        break;
+                  
                     case "Information":
                         ContentFrame.Navigate(typeof(View.Information));
                         break;
-                    case "Mark":
-                        ContentFrame.Navigate(typeof(View.Mark));
+                    case "This_Class":
+                        ContentFrame.Navigate(typeof(View.TheClass));
                         break;
+                    case "Subject":
+                        ContentFrame.Navigate(typeof(View.Subjects));
+                        break;
+                    
                 }
             }
+        }
+        private async void Do_Password(object sender, RoutedEventArgs e)
+        {
+            var changePassword = new ChangePasswordDialog();
+            await changePassword.ShowAsync();
+        }
+
+        private async void Do_Logout(object sender, RoutedEventArgs e)
+        {
+            await Handle.WriteFile("credential.txt", "");
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(View.Login));
         }
     }
 }

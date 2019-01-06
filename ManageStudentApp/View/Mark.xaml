@@ -8,7 +8,37 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    
+    
+    <Grid Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="50" Margin="10">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image.Source>
+                        <BitmapImage DecodePixelWidth="150" UriSource="/image/Logo-FE.png" DecodePixelHeight="50"/>
+                    </Image.Source>
+                </Image>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="LỚP ĐANG THEO HỌC" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <ListView  Margin="0, 60" HorizontalAlignment="Center" VerticalAlignment="Stretch" >
+                <ListViewItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal">
+                        <ListViewHeaderItem Width="300" BorderBrush="MediumSeaGreen">Assignment</ListViewHeaderItem>
+                        <ListViewHeaderItem Width="300">Lý Thuyết</ListViewHeaderItem>
+                        <ListViewHeaderItem Width="300">Thực hành</ListViewHeaderItem>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+        
     </Grid>
 </Page>

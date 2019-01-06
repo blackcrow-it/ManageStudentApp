@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ManageStudentApp.Service;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -67,13 +69,13 @@ namespace ManageStudentApp
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(View.Home), e.Arguments);
+                    rootFrame.Navigate(typeof(View.Login), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
 
-            // CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
         }
 
         /// <summary>
@@ -93,10 +95,16 @@ namespace ManageStudentApp
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            string remember = await Handle.ReadFile("remember.txt");
+            Debug.WriteLine(remember);
+            if (remember == "")
+            {
+                Handle.WriteFile("credential.txt", "");
+            }
             deferral.Complete();
         }
     }

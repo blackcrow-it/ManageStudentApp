@@ -95,6 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\EditInformationDialog.xaml.cs">
+      <DependentUpon>EditInformationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Credential.cs" />
     <Compile Include="Entity\ErrorResponse.cs" />
     <Compile Include="Entity\Student.cs" />
     <Compile Include="Entity\TokenResponse.cs" />
@@ -102,18 +109,32 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\APIHandle.cs" />
     <Compile Include="Service\APIUrl.cs" />
+    <Compile Include="Service\Handle.cs" />
+    <Compile Include="View\BlogHome.xaml.cs">
+      <DependentUpon>BlogHome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Information.xaml.cs">
       <DependentUpon>Information.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ListStudent.xaml.cs">
+      <DependentUpon>ListStudent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Mark.xaml.cs">
       <DependentUpon>Mark.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Subjects.xaml.cs">
+      <DependentUpon>Subjects.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TheClass.xaml.cs">
+      <DependentUpon>TheClass.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +144,10 @@
     <None Include="ManageStudentApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Image\download.jfif" />
+    <Content Include="Image\FUG-t3-2018-bannerweb.jpg" />
+    <Content Include="Image\Logo-FE.png" />
+    <Content Include="Image\logo_FAI.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -137,9 +162,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialog\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\EditInformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\BlogHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Home.xaml">
       <SubType>Designer</SubType>
@@ -149,11 +186,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ListStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Mark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Subjects.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TheClass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer>
-        <StackPanel Margin="100,8,100,0">
+        <StackPanel Margin="100,50,100,0">
             <TextBlock Text="Edit Information" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="MediumSeaGreen" FontSize="25" FontWeight="ExtraLight" Margin="10"/>
             <StackPanel>
                 <Grid>
@@ -37,7 +37,7 @@
                 <Button Content="Capture Your Photo" Foreground="AliceBlue" Background="MediumSeaGreen" Margin="0,10,0,0" Click="Choose_Image"/>
                 <TextBox x:Name="Address" PlaceholderText="Address" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" AcceptsReturn="True" Height= "55"  />
                 <TextBox x:Name="Introduction" PlaceholderText="Introduction" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" AcceptsReturn="True" Height= "55" Margin="0,0,0,30"/>
-                <CalendarDatePicker x:Name="BirthdayPicker" Header="Birthday" Foreground="Gray" DateChanged="BirthdayPicker_DateChanged"/>
+                <!--<CalendarDatePicker x:Name="BirthdayPicker" Header="Birthday" Foreground="Gray" DateChanged="BirthdayPicker_DateChanged"/>-->
                 <TextBlock Text="Gender" Foreground="Gray"/>
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Content="Male" Tag="1" Checked="RadioButton_Checked"/>

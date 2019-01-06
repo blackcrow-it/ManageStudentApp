@@ -6,11 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Sigin_Loaded">
 
 
 
-    <StackPanel Margin="20">
+    <StackPanel Margin="50">
         <StackPanel.Background>
             <ImageBrush/>
         </StackPanel.Background>
@@ -20,7 +20,7 @@
             Foreground="White"
             Opacity="0.5"
             Margin="10"/>
-        <TextBlock Text="Sign in with your account" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Đăng nhập bằng tài khoản của bạn" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid Margin="100,8,100,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"></RowDefinition>
@@ -29,12 +29,12 @@
                 <RowDefinition Height="0.5*"></RowDefinition>
                 <RowDefinition Height="0.5*"></RowDefinition>
             </Grid.RowDefinitions>
-            <SymbolIcon Symbol="Mail" HorizontalAlignment="Right" Grid.Row="0"/>
-            <TextBox x:Name="Email" PlaceholderText="Email" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0"/>
+            <SymbolIcon Symbol="OtherUser" HorizontalAlignment="Right" Grid.Row="0"/>
+            <TextBox x:Name="UserName" PlaceholderText="Tên tài khoản" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0"/>
             <SymbolIcon Symbol="Permissions" HorizontalAlignment="Right" Grid.Row="1"/>
-            <PasswordBox x:Name="Password" PlaceholderText="Password" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="1"/>
-            <CheckBox Content="Remember Me" Grid.Row="2" Margin="2"/>
-            <Button Content="Login" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="AliceBlue" Background="MediumSeaGreen" Width="324" Grid.Row="3" Click="Button_submit" Margin="0,0,0,0" />
+            <PasswordBox x:Name="Password" PlaceholderText="Mật khẩu" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="1"/>
+            <CheckBox x:Name="rememberCheck" Content="Ghi nhớ đăng nhập" Grid.Row="2" Margin="2"/>
+            <Button Content="Đăng nhập" HorizontalAlignment="Center" VerticalAlignment="Stretch" Foreground="AliceBlue" Background="MediumSeaGreen" Width="324" Grid.Row="3" Click="Button_submit" />
 
         </Grid>
     </StackPanel>

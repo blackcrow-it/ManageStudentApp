@@ -1,4 +1,6 @@
-﻿using ManageStudentApp.Entity;
+﻿using ManageStudentApp.Dialog;
+using ManageStudentApp.Entity;
+using ManageStudentApp.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,74 +31,44 @@ namespace ManageStudentApp.View
     /// </summary>
     public sealed partial class Information : Page
     {
+        private Student _currentStudent;
         Student student = new Student();
         public Information()
         {
             this.InitializeComponent();
-            //LoadStudentInformation();
+            this.InitializeComponent();
+            this.GetInfoUser();
+
         }
-        //private async void LoadStudentInformation()
-        //{
-        //    HttpClient httpClient = new HttpClient();
-        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "lMyHzmDDg4vQik4XAmaOap9fy9VsDbH1HP6TMdJUCh3NHexd4rib2ASn05rCPpPG");
-        //    var response = httpClient.GetAsync("");        // cần api
-        //    var content = await response.Result.Content.ReadAsStringAsync();
-        //    Debug.WriteLine(content);
-        //    student = JsonConvert.DeserializeObject<Student>(content);
-        //    Debug.WriteLine(student.email);
-        //    this.txt_fullname.Text = student.firstName + " " + student.lastName;
-        //    this.txt_phone.Text = student.phone;
-        //    this.txt_email.Text = student.email;
-        //    this.txt_birthday.Text = student.birthday;
-        //    this.txt_address.Text = student.address;
-        //    //this.img_avatar.Source = new BitmapImage(new Uri(student.avatar, UriKind.Absolute));
-        //}
+
         private async void Edit_Information(object sender, RoutedEventArgs e)
         {
-            var rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(MainPage));
+            //this.Myframe.Navigate(typeof(MainPage));
+            var edit = new EditInformationDialog();
+            await edit.ShowAsync();
         }
-        //public static async void GetInformation()
-        //{
-        //    // Auto login nếu tồn tại file token 
-        //    currentLogin = new Student();
-        //    StorageFolder folder = ApplicationData.Current.LocalFolder;
-        //    if (await folder.TryGetItemAsync("token.txt") != null)
-        //    {
-        //        StorageFile file = await folder.GetFileAsync("token.txt");
-        //        var tokenContent = await FileIO.ReadTextAsync(file);
 
-        //        TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(tokenContent);
+      
+       
+        public async void GetInfoUser()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await folder.GetFileAsync("credential.txt");
+            string content = await FileIO.ReadTextAsync(file);
+            TokenResponse member_token = JsonConvert.DeserializeObject<TokenResponse>(content);
 
-        //        // Lay thong tin ca nhan bang token.
-        //        HttpClient client2 = new HttpClient();
-        //        client2.DefaultRequestHeaders.Add("Authorization", "Basic " + token.Token);
-        //        var resp = client2.GetAsync(APIUrl.MEMBER_INFORMATION).Result;
-        //        Debug.WriteLine(await resp.Content.ReadAsStringAsync());
-        //        var userInfoContent = await resp.Content.ReadAsStringAsync();
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Basic " + member_token.AccessToken);
+            var response = client.GetAsync(APIUrl.MEMBER_INFORMATION);
+            Debug.WriteLine(response.Result.StatusCode);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            Student responseJsonMember = JsonConvert.DeserializeObject<Student>(result);
+            this.txt_fullname.Text = responseJsonMember.firstName + " " + responseJsonMember.lastName;
 
-        //        Student userInfoJson = JsonConvert.DeserializeObject<Student>(userInfoContent);
-
-        //        currentLogin.firstName = userInfoJson.firstName;
-        //        currentLogin.lastName = userInfoJson.lastName;
-        //        currentLogin.phone = userInfoJson.phone;
-        //        currentLogin.address = userInfoJson.address;
-        //        currentLogin.introduction = userInfoJson.introduction;
-        //        currentLogin.gender = userInfoJson.gender;
-        //        currentLogin.birthday = userInfoJson.birthday;
-        //        currentLogin.email = userInfoJson.email;
-        //        currentLogin.password = userInfoJson.password;
-        //        currentLogin.status = userInfoJson.status;
-        //        var rootFrame = Window.Current.Content as Frame;
-        //        rootFrame.Navigate(typeof(MainPage));
-
-
-        //        Debug.WriteLine("Đã đăng nhập thành công");
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine("Vui lòng đăng nhập lại");
-        //    }
-        //}
+            //this.txt_phone.Text = responseJsonMember.phone;
+            this.txt_birthday.DataContext = responseJsonMember.birthday;
+            //this.txt_email.Text = responseJsonMember.email;
+            //this.txt_address.Text = responseJsonMember.address;
+        }
     }
 }

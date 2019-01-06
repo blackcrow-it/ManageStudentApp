@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace ManageStudentApp.Entity
 {
-    class TokenResponse
+    class Courses
     {
-        private string _accessToken;
-
-        public string AccessToken { get => _accessToken; set => _accessToken = value; }
     }
 }

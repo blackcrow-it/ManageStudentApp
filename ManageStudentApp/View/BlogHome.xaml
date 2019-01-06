@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="ManageStudentApp.View.BlogHome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ManageStudentApp.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/image/FUG-t3-2018-bannerweb.jpg"/>
+            </StackPanel.Background>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="200" Height="50" Margin="0,20,0,0">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image.Source>
+                        <BitmapImage DecodePixelWidth="200" UriSource="/image/logo_FAI.png" DecodePixelHeight="50"/>
+                    </Image.Source>
+                </Image>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Background="#f79971">
+            <TextBlock Text="VÌ SAO 13.000 SINH VIÊN CHỌN ĐẠI HỌC FPT?" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="38" FontStyle="Normal" Margin="0,15,0,0"/>
+            <ListView Margin="0,10">
+                <StackPanel Orientation="Horizontal" >
+                    <StackPanel Orientation="Vertical" Margin="20,0" Width="375">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                            <TextBlock Text="5  " Grid.Row="0" FontSize="50" Foreground="AliceBlue"/>
+                            <SymbolIcon Symbol="SolidStar" Grid.Row="0" Foreground="AliceBlue"/>
+                        </StackPanel>
+                        <TextBlock Text="CHẤT LƯỢNG ĐÀO TẠO" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="20,0"  Width="375">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                            <TextBlock Text="TOP  " Grid.Row="0" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="2" Grid.Row="0" FontSize="50" Foreground="AliceBlue"/>
+                        </StackPanel>
+                        <TextBlock Text="QUẢN TRỊ KINH DOANH" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="TỐT NHẤT VIỆT NAM
+
+" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="20,0"  Width="375">
+                        <TextBlock Text="96%" FontSize="50" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="SINH VIÊN CÓ VIỆC LÀM" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="NGAY" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -9,9 +9,10 @@ namespace ManageStudentApp.Service
     class APIUrl
     {
 
-        public static string MEMBER_INFORMATION = "https://2-dot-backup-server-002.appspot.com/_api/v2/members/information";
-        public static string API_LOGIN = "http://2-dot-backup-server-002.appspot.com/_api/v2/members/authentication";
-        public static string GET_SONG = "https://2-dot-backup-server-002.appspot.com/_api/v2/songs/";
+        public static string MEMBER_INFORMATION = "https://t1708m1serverproject.azurewebsites.net/api/HandleApi/information-student";
+        public static string API_LOGIN = "https://t1708m1serverproject.azurewebsites.net/api/AuthenticationApi/login";
+        public static string CHANGE_INFORMATION = "https://t1708m1serverproject.azurewebsites.net/api/HandleApi/change-information";
+        public static string CHANGE_PASSWORD = "https://t1708m1serverproject.azurewebsites.net/api/HandleApi/change-password";
 
     }
 }

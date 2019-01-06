@@ -9,26 +9,52 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" Header="Welcome" AlwaysShowHeader="False">
+        <NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" Loaded="Blog_Home" Header="Welcome to FPT APTEACH" AlwaysShowHeader="True">
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader Content="Man-made"/>
-                <NavigationViewItem Icon="AddFriend" Content="Login" Tag="login"/>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader Content="Natural"/>
-                <NavigationViewItem Icon="BlockContact" Content="Information" Tag="Information"/>
-                <NavigationViewItem Icon="Page2" Content="Mark" Tag="Mark"/>
+                <NavigationViewItemHeader Content="Thông tin cá nhân"/>
+                <NavigationViewItem Icon="Contact" Content="Thông tin" Tag="Information"/>
+                <NavigationViewItemHeader Content="Thông tin cá nhân"/>
+                <NavigationViewItem Icon="OtherUser" Content="Tra cứu điểm thi" Tag="Subject"/>
+                <NavigationViewItem Icon="Page2" Content="Thông tin l" Tag="This_Class"/>
             </NavigationView.MenuItems>
 
             <NavigationView.AutoSuggestBox>
-                
                 <AutoSuggestBox x:Name="ASB" QueryIcon="Find"/>
             </NavigationView.AutoSuggestBox>
-
+            <NavigationView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Margin="24,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                           FontSize="28"
+                           VerticalAlignment="Center"
+                           Text="Welcome"/>
+                        <CommandBar Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            DefaultLabelPosition="Right"
+                            Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                            <AppBarButton Label="Thay đổi mật khẩu" Icon="Permissions" Click="Do_Password"/>
+                            <AppBarButton Label="Đăng xuất" Click="Do_Logout">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE7E8;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
+                    </Grid>
+                </DataTemplate>
+            </NavigationView.HeaderTemplate>
             <Frame x:Name="ContentFrame">
-                <TransitionCollection>
+                <!--<TransitionCollection>
                     <NavigationThemeTransition/>
-                </TransitionCollection>
+                </TransitionCollection>-->
             </Frame>
         </NavigationView>
+       
     </Grid>
+   
 </Page>
