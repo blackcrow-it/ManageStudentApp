@@ -10,7 +10,8 @@
 
     
     
-    <Grid Margin="50">
+    <Grid>
+        <Frame x:Name="MyFrame">
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -48,7 +49,20 @@
         </StackPanel>-->
         <StackPanel>
             <StackPanel Grid.Row="1">
-                <TextBlock Text="ĐIỂM" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
+                <Button Click="BackToList">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Symbol="Back" Grid.Column="0"/>
+                        <TextBlock Grid.Column="1" Margin="10 0 0 0">Quay lại</TextBlock>
+                    </Grid>
+                </Button>
+                <TextBlock Text="ĐIỂM MÔN" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
             </StackPanel>
             <Grid Margin="20 20 20 20">
                 <Grid.ColumnDefinitions>
@@ -56,28 +70,41 @@
                 </Grid.ColumnDefinitions>
                 <RelativePanel Grid.Column="0" HorizontalAlignment="Center">
                 </RelativePanel>
-                <Grid Grid.Column="1" Margin="200 20 20 20" VerticalAlignment="Center" >
+                <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Assignment:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="txt_fullname"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Chưa có điểm ..." x:Name="txt_asm" Foreground="DarkGray"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" x:Name="txt_status_asm"/>
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Lý Thuyết:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
-                    <TextBlock Grid.Column="1" Grid.Row="1" x:Name="txt_phone" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="Chưa có điểm ..." x:Name="txt_theory" Foreground="DarkGray"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" x:Name="txt_status_theory"/>
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Thực hành:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
-                    <TextBlock Grid.Column="1" Grid.Row="2" x:Name="txt_email" />
-                  
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="Chưa có điểm ..." x:Name="txt_paratice"  Foreground="DarkGray"/>
+                    <TextBlock Grid.Column="2" Grid.Row="2" x:Name="txt_status_paratice"/>
+                    <Grid Grid.Column="2" Grid.Row="3" Margin="30 30 20 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Trạng thái: " FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="txt_status" FontWeight="Bold" FontSize="16"/>
+                    </Grid>
                 </Grid>
             </Grid>
         </StackPanel>
+            </Frame>
     </Grid>
 </Page>

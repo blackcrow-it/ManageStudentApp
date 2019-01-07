@@ -48,6 +48,15 @@ namespace ManageStudentApp.View
                 ListCourses.Add(item);
             }
         }
+        private async void Courses_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var grid = sender as Grid;
+            var course = grid.Tag as Courses;
+            var courseId = course.id;
+            Debug.WriteLine(courseId);
+            Handle.WriteFile("courseId.txt", courseId.ToString());
+            this.MyFrame.Navigate(typeof(View.Mark));
+        }
         private async void Btn_Subject(object sender, RoutedEventArgs e)
         {
             this.MyFrame.Navigate(typeof(View.Mark));

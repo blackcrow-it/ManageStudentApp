@@ -24,7 +24,7 @@
             Initials=""
             Foreground="White"
             Opacity="0.5"
-            Margin="10"/>
+            Margin="10" x:Name="img_avatar"/>
                 <TextBlock x:Name="rollNumber" Text="Sinh viên" HorizontalAlignment="Center" FontSize="20"/>
                 <Grid Margin="20 20 20 20">
                 <Grid.ColumnDefinitions>

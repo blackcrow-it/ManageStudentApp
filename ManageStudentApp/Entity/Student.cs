@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ManageStudentApp.Entity
 {
-    class Student
+    public class Student
     {
         private string _accountId;
         private string _firstName;

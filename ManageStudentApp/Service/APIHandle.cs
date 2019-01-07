@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -49,6 +50,45 @@ namespace ManageStudentApp.Service
             var result = await response.Result.Content.ReadAsStringAsync();
             StudentWithRollnumber responseJsonMember = JsonConvert.DeserializeObject<StudentWithRollnumber>(result);
             return responseJsonMember;
+        }
+
+        public static async Task<ObservableCollection<Marks>> GetMarks()
+        {
+            HttpClient client = new HttpClient();
+            var token = await Handle.GetToken();
+            if (token == null) throw new ArgumentNullException(nameof(token));
+            var responseJsonStudent = await GetInformation(token);
+            var rollNumber = responseJsonStudent.rollNumber;
+            var courseId = await Handle.ReadFile("courseId.txt");
+            var response = client.GetAsync(APIUrl.MARKS_FOR_STUDENT+"?rollNumber="+rollNumber+"&courseId="+courseId);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            ObservableCollection<Marks> responseJsonMarks = JsonConvert.DeserializeObject<ObservableCollection<Marks>>(result);
+            return responseJsonMarks;
+        }
+
+        public static async Task<ObservableCollection<Grades>> GetGrades()
+        {
+            HttpClient client = new HttpClient();
+            var token = await Handle.GetToken();
+            if (token == null) throw new ArgumentNullException(nameof(token));
+            var responseJsonStudent = await GetInformation(token);
+            var rollNumber = responseJsonStudent.rollNumber;
+            var response = client.GetAsync(APIUrl.GRADES_FOR_STUDENT + rollNumber);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            ObservableCollection<Grades> responseJsonGrades = JsonConvert.DeserializeObject<ObservableCollection<Grades>>(result);
+            return responseJsonGrades;
+        }
+
+        public static async Task<ObservableCollection<Student>> GetListStudent()
+        {
+            HttpClient client = new HttpClient();
+            var gradeId = await Handle.ReadFile("gradeId.txt");
+            var response = client.GetAsync(APIUrl.LIST_STUDENT + gradeId);
+            Debug.WriteLine(APIUrl.LIST_STUDENT + gradeId);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            Debug.WriteLine(response.Status);
+            ObservableCollection<Student> responseJsonStudents = JsonConvert.DeserializeObject<ObservableCollection<Student>>(result);
+            return responseJsonStudents;
         }
     }
 }
