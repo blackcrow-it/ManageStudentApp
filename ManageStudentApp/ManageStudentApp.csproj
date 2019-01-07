@@ -101,9 +101,11 @@
     <Compile Include="Dialog\EditInformationDialog.xaml.cs">
       <DependentUpon>EditInformationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Courses.cs" />
     <Compile Include="Entity\Credential.cs" />
     <Compile Include="Entity\ErrorResponse.cs" />
     <Compile Include="Entity\Student.cs" />
+    <Compile Include="Entity\StudentWithRollnumber.cs" />
     <Compile Include="Entity\TokenResponse.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -146,7 +148,6 @@
   <ItemGroup>
     <Content Include="Image\download.jfif" />
     <Content Include="Image\FUG-t3-2018-bannerweb.jpg" />
-    <Content Include="Image\Logo-FE.png" />
     <Content Include="Image\logo_FAI.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

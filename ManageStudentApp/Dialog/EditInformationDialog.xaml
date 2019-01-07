@@ -13,8 +13,8 @@
     PrimaryButtonClick="SubmitButtonClick"
     SecondaryButtonClick="ResetButtonClick">
 
-    <Grid>
-        <ScrollViewer>
+    <Grid Width="405">
+        <!--<ScrollViewer>
             <StackPanel >
                 <TextBlock Text="SỬA THÔNG TIN"  Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="20" HorizontalAlignment="Center"/>
                 <StackPanel>
@@ -36,11 +36,43 @@
                     <TextBlock x:Name="email" Visibility="Collapsed" Foreground="Red" Margin="5,20,0,0"/>
                     <TextBox x:Name="AvatarUrl" PlaceholderText="Ảnh đại diện" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
                     <Image x:Name="Avatar" Width="150" Height="150" HorizontalAlignment="Left" Margin="0,10,0,0" />
-                    <Button Content="Ảnh của bạn" Foreground="AliceBlue" Background="MediumSeaGreen" Margin="0,10,0,0" Click="Choose_Image"/>
+                    <Button Content="Ảnh đại diện" Foreground="AliceBlue" Background="MediumSeaGreen" Margin="0,10,0,0" Click="Choose_Image"/>
                     <TextBox x:Name="Address" PlaceholderText="Địa chỉ" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" AcceptsReturn="True" Height= "55"  />
-                    <!--<CalendarDatePicker x:Name="BirthdayPicker" Header="Birthday" Foreground="Gray" DateChanged="BirthdayPicker_DateChanged"/>-->
+                    --><!--<CalendarDatePicker x:Name="BirthdayPicker" Header="Birthday" Foreground="Gray" DateChanged="BirthdayPicker_DateChanged"/>--><!--
                     <StackPanel Orientation="Horizontal"/>
                 </StackPanel>
+            </StackPanel>
+        </ScrollViewer>-->
+
+        <ScrollViewer>
+            <StackPanel Margin="20, 20, 20, 20">
+                <TextBlock Text="SỬA THÔNG TIN"  Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="20" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Name" Header="Tên"/>
+                <TextBlock x:Name="name" Foreground="Red"></TextBlock>
+                <Grid Margin="0, 20, 0 , 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="Email" Header="Email" Grid.Row="0" Grid.Column="0" Margin="0, 0, 10, 0"/>
+                    <TextBlock x:Name="email" Grid.Row="1" Grid.Column="0" Foreground="Red"></TextBlock>
+                    <TextBox x:Name="Phone" Header="Số điện thoại" Grid.Row="0" Grid.Column="1"/>
+                    <TextBlock x:Name="phone" Grid.Row="1" Grid.Column="1" Foreground="Red"></TextBlock>
+                </Grid>
+
+                <TextBox x:Name="Address" Header="Địa chỉ" AcceptsReturn="True" Height="100" Margin="0, 20, 0 , 0"/>
+                <TextBlock x:Name="address" Foreground="Red"></TextBlock>
+                <!--<TextBlock Text="Giới Tính" Margin="0, 20, 0 , 0"/>
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0 , 0">
+                    <RadioButton Content="Nam" Tag="1" Checked="RadioButton_Checked"/>
+                    <RadioButton Content="Nữ" Tag="0" Checked="RadioButton_Checked"/>
+                    <RadioButton Content="Khác" Tag="2" IsChecked="True" Checked="RadioButton_Checked"/>
+                </StackPanel>-->
+                <CalendarDatePicker x:Name="BirthdayPicker" Header="Ngày sinh"  Margin="0, 20, 0 , 0"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

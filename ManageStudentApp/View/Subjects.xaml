@@ -5,6 +5,7 @@
     xmlns:local="using:ManageStudentApp.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:entity="using:ManageStudentApp.Entity"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -29,23 +30,28 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Margin="50">
 
-                    <ListView  
-                  ScrollViewer.HorizontalScrollMode="Enabled" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                  ScrollViewer.VerticalScrollMode="Disabled"
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <Button Click="Btn_Subject"  Background="White" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5">
-                            <x:String>Universal_Windows_Platform</x:String>
-                        </Button>
-                        <Button Background="White" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5">
-                            <x:String>Universal_Windows_Platform2</x:String>
-                        </Button>
-                    </ListView>
+                    <GridView ItemsSource="{x:Bind ListCourses}" x:Name="arraySongLocal" Foreground="{ThemeResource ListViewItemDragBackgroundThemeBrush}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="entity:Courses">
+                                <Grid Margin="0"  Tag="{Binding}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Grid.Row="0" Height="150" Width="150" Margin="10" x:Name="thumnail">
+                                        <!--<Rectangle.Fill>
+                                            --><!--<ImageBrush ImageSource="{x:Bind thumnail}"/>--><!--
+                                        </Rectangle.Fill>-->
+                                    </Rectangle>
+                                    <StackPanel Grid.Row="1" Margin="10 0 10 0" Width="150" Height="80" HorizontalAlignment="Left">
+                                        <TextBlock Grid.Row="0" Text="{x:Bind name}" FontSize="15" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Row="1" Text="{x:Bind description}" FontSize="12" HorizontalAlignment="Left" Foreground="Gray" Margin="0 5 0 0"/>
+                                        <!--<TextBlock Grid.Row="2" Text="{x:Bind author}" Foreground="Gray"/>-->
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </StackPanel>
             </Grid>
         </Frame>

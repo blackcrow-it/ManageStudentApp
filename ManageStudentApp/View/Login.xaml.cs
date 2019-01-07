@@ -34,7 +34,6 @@ namespace ManageStudentApp.View
         public Login()
         {
             this.InitializeComponent();
-          
         }
 
         private async void Button_submit(object sender, RoutedEventArgs e)
@@ -82,7 +81,7 @@ namespace ManageStudentApp.View
             if (token != "")
             {
                 var httpResponseMessage = APIHandle.GetData(APIUrl.MEMBER_INFORMATION, "Basic", token);
-                Debug.WriteLine(httpResponseMessage.Result.StatusCode);
+                //Debug.WriteLine(httpResponseMessage.Result.StatusCode);
                 if (httpResponseMessage.Result.StatusCode == HttpStatusCode.OK)
                 {
                     var rootFrame = Window.Current.Content as Frame;

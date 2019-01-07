@@ -78,7 +78,6 @@ namespace ManageStudentApp.Service
                     Credential credential = JsonConvert.DeserializeObject<Credential>(text);
                     token = credential.accessToken;
                 }
-                
             }
             else
             {

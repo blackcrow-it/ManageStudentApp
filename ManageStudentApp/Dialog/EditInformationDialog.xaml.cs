@@ -1,4 +1,5 @@
 ﻿using ManageStudentApp.Entity;
+using ManageStudentApp.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,12 @@ namespace ManageStudentApp.Dialog
         private string currentUploadUrl;
         private Student currentStudent;
         private StorageFile photo;
-        private string contents;
+       // private string contents;
         public EditInformationDialog()
         {
             this.currentStudent = new Student();
             this.InitializeComponent();
+            Getinfo();
         }
 
         private async void SubmitButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -50,7 +52,7 @@ namespace ManageStudentApp.Dialog
 
             this.currentStudent.email = this.Email.Text;
             this.currentStudent.phone = this.Phone.Text;
-            this.currentStudent.avatar = this.AvatarUrl.Text;
+            //this.currentStudent.avatar = this.AvatarUrl.Text;
             this.currentStudent.address = this.Address.Text;
             string jsonUser = JsonConvert.SerializeObject(currentStudent);
 
@@ -73,12 +75,29 @@ namespace ManageStudentApp.Dialog
             }
 
         }
+        public async void Getinfo()
+        {
+            string content = await Handle.ReadFile("credential.txt");
+            TokenResponse member_token = JsonConvert.DeserializeObject<TokenResponse>(content);
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Basic " + member_token.AccessToken);
+            var response = client.GetAsync(APIUrl.MEMBER_INFORMATION);
+            Debug.WriteLine(response.Result.StatusCode);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            StudentWithRollnumber responseJsonMember = JsonConvert.DeserializeObject<StudentWithRollnumber>(result);
+            this.Name.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
+            this.Email.Text = responseJsonMember.informations.email;
+            this.Phone.Text = responseJsonMember.informations.phone;
+            this.BirthdayPicker.Date = responseJsonMember.informations.birthday;
+            this.Address.Text = responseJsonMember.informations.address;
+          
+        }
 
         private void ResetButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             this.Phone.Text = string.Empty;
             this.Email.Text = string.Empty;
-            this.AvatarUrl.Text = string.Empty;
             this.Address.Text = string.Empty;
         }
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -140,8 +159,6 @@ namespace ManageStudentApp.Dialog
                 Stream stream2 = wresp.GetResponseStream();
                 StreamReader reader2 = new StreamReader(stream2);
                 string imageUrl = reader2.ReadToEnd();
-                Avatar.Source = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
-                AvatarUrl.Text = imageUrl;
             }
             catch (Exception ex)
             {

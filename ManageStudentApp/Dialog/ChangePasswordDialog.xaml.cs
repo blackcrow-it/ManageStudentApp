@@ -29,25 +29,29 @@ namespace ManageStudentApp.Dialog
             this.InitializeComponent();
         }
 
-        private void SubmitPasswordClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void SubmitPasswordClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Dictionary<String, String> changePassword = new Dictionary<string, string>();
             var password = Password.Password;
             var newPassword = NewPassword.Password;
             changePassword.Add("password", password);
             changePassword.Add("newPassword", newPassword);
-            var token = Handle.GetToken();
+            string token = await Handle.GetToken();
             HttpClient client = new HttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(changePassword), System.Text.Encoding.UTF8, "application/json");
             client.DefaultRequestHeaders.Add("Authorization", "Basic " + token);
             var response = client.PostAsync(APIUrl.CHANGE_PASSWORD, content);
+            Debug.WriteLine(changePassword);
+            Debug.WriteLine(token);
             Debug.WriteLine(response.Result.StatusCode);
-            if(response.Result.StatusCode == HttpStatusCode.OK)
+            if (response.Result.StatusCode == HttpStatusCode.OK)
             {
+                var rootFrame = Window.Current.Content as Frame;
+                rootFrame.Navigate(typeof(View.Home));
                 Debug.WriteLine("Thay đổi mật khẩu thành công");
             } else
             {
-                Debug.WriteLine("Looxi");
+                Debug.WriteLine("Lỗi");
             }
         }
 

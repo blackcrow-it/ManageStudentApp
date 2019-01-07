@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ManageStudentApp.Entity
 {
-    class Courses
+    public class Courses
     {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
     }
 }

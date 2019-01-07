@@ -32,6 +32,23 @@ namespace ManageStudentApp.Service
             var response = httpClient.GetAsync(api_url);
             return response.Result;
         }
+        public async static Task<HttpResponseMessage> GetCourses(string roll)
+        {
+            HttpClient httpClient = new HttpClient();
+            var api_url = APIUrl.COURSES_FOR_STUDENT + roll;
+            var response = httpClient.GetAsync(api_url);
+            return response.Result;
+        }
 
+        public static async Task<StudentWithRollnumber> GetInformation(string token)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Basic " + token);
+            var response = client.GetAsync(APIUrl.MEMBER_INFORMATION);
+            Debug.WriteLine(response.Result.StatusCode);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            StudentWithRollnumber responseJsonMember = JsonConvert.DeserializeObject<StudentWithRollnumber>(result);
+            return responseJsonMember;
+        }
     }
 }

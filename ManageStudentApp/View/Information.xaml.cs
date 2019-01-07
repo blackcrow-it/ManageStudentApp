@@ -31,7 +31,7 @@ namespace ManageStudentApp.View
     /// </summary>
     public sealed partial class Information : Page
     {
-        private Student _currentStudent;
+      
         Student student = new Student();
         public Information()
         {
@@ -43,32 +43,25 @@ namespace ManageStudentApp.View
 
         private async void Edit_Information(object sender, RoutedEventArgs e)
         {
-            //this.Myframe.Navigate(typeof(MainPage));
             var edit = new EditInformationDialog();
             await edit.ShowAsync();
+           // this.Myframe.Navigate(typeof(MainPage));
         }
 
       
        
         public async void GetInfoUser()
         {
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile file = await folder.GetFileAsync("credential.txt");
-            string content = await FileIO.ReadTextAsync(file);
+            string content = await Handle.ReadFile("credential.txt");
             TokenResponse member_token = JsonConvert.DeserializeObject<TokenResponse>(content);
-
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", "Basic " + member_token.AccessToken);
-            var response = client.GetAsync(APIUrl.MEMBER_INFORMATION);
-            Debug.WriteLine(response.Result.StatusCode);
-            var result = await response.Result.Content.ReadAsStringAsync();
-            Student responseJsonMember = JsonConvert.DeserializeObject<Student>(result);
-            this.txt_fullname.Text = responseJsonMember.firstName + " " + responseJsonMember.lastName;
-
-            //this.txt_phone.Text = responseJsonMember.phone;
-            this.txt_birthday.DataContext = responseJsonMember.birthday;
-            //this.txt_email.Text = responseJsonMember.email;
-            //this.txt_address.Text = responseJsonMember.address;
+            
+            StudentWithRollnumber responseJsonMember = await APIHandle.GetInformation(member_token.AccessToken);
+            this.txt_fullname.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
+            this.rollNumber.Text = responseJsonMember.rollNumber;
+            this.txt_phone.Text = responseJsonMember.informations.phone;
+            this.txt_birthday.Text = responseJsonMember.informations.birthday.ToString("dd/MM/yyyy");
+            this.txt_email.Text = responseJsonMember.informations.email;
+            this.txt_address.Text = responseJsonMember.informations.address;
         }
     }
 }

@@ -103,7 +103,7 @@ namespace ManageStudentApp
             Debug.WriteLine(remember);
             if (remember == "")
             {
-                Handle.WriteFile("credential.txt", "");
+                await Handle.WriteFile("credential.txt", "");
             }
             deferral.Complete();
         }

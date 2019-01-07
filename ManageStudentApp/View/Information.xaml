@@ -25,9 +25,8 @@
             Foreground="White"
             Opacity="0.5"
             Margin="10"/>
-            <TextBlock Text="Tk A" HorizontalAlignment="Center" FontSize="20"/>
-            <!--<Image Width="200" Height="200" x:Name="img_avatar"/>-->
-            <Grid Margin="20 20 20 20">
+                <TextBlock x:Name="rollNumber" Text="Sinh viên" HorizontalAlignment="Center" FontSize="20"/>
+                <Grid Margin="20 20 20 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -56,9 +55,7 @@
                         <TextBlock Grid.Column="1" Grid.Row="3" x:Name="txt_birthday" />
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Địa chỉ:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
                         <TextBlock Grid.Column="1" Grid.Row="4" x:Name="txt_address"/>
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Giới thiệu:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
-                        <TextBlock Grid.Column="1" Grid.Row="5" x:Name="txt_intro"/>
-                </Grid>
+                    </Grid>
             </Grid>
         </StackPanel>
         </Frame>
