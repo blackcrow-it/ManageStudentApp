@@ -8,7 +8,76 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    
+    
+    <Grid Margin="50">
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="50" Margin="10">
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image.Source>
+                        <BitmapImage DecodePixelWidth="150" UriSource="/image/Logo-FE.png" DecodePixelHeight="50"/>
+                    </Image.Source>
+                </Image>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="LỚP ĐANG THEO HỌC" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <ListView  Margin="0, 60" HorizontalAlignment="Center" VerticalAlignment="Stretch" >
+                <ListViewItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal">
+                        <ListViewHeaderItem Width="300" BorderBrush="MediumSeaGreen">Assignment</ListViewHeaderItem>
+                        <ListViewHeaderItem Width="300">Lý Thuyết</ListViewHeaderItem>
+                        <ListViewHeaderItem Width="300">Thực hành</ListViewHeaderItem>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+            <ListViewItem  HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal" >
+                    <TextBlock  x:Name="mark_assignment"  Width="300"/>
+                    <TextBlock  x:Name="txt_rollNumber"  Width="300"/>
+                    <TextBlock  x:Name="txt_gender"  Width="300"/>
+                </StackPanel>
+            </ListViewItem>
+        </StackPanel>-->
+        <StackPanel>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="ĐIỂM" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <Grid Margin="20 20 20 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <RelativePanel Grid.Column="0" HorizontalAlignment="Center">
+                </RelativePanel>
+                <Grid Grid.Column="1" Margin="200 20 20 20" VerticalAlignment="Center" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Assignment:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="txt_fullname"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Lý Thuyết:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" x:Name="txt_phone" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Thực hành:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" x:Name="txt_email" />
+                  
+                </Grid>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>

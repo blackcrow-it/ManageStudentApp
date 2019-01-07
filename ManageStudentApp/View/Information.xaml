@@ -8,18 +8,25 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Margin="50">
+        <Frame x:Name="Myframe">
         <StackPanel Margin="0,0,0,-306">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20">
-                <Button Foreground="AliceBlue" Background="MediumSeaGreen"  Height="32" Width="152">
-                    <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20" >
+                <Button Foreground="AliceBlue" Background="MediumSeaGreen"  Height="32" Width="152" Click="Edit_Information">
+                    <StackPanel Orientation="Horizontal" >
                         <SymbolIcon Symbol="Edit" Margin="0,0,5,0"/>
-                        <TextBlock>Edit Information</TextBlock>
+                            <TextBlock>Sửa thông tin</TextBlock>
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <Image Width="200" Height="200" x:Name="img_avatar"/>
-            <Grid Margin="20 20 20 20">
+            <PersonPicture
+            DisplayName=""
+            Initials=""
+            Foreground="White"
+            Opacity="0.5"
+            Margin="10"/>
+                <TextBlock x:Name="rollNumber" Text="Sinh viên" HorizontalAlignment="Center" FontSize="20"/>
+                <Grid Margin="20 20 20 20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -38,20 +45,19 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Grid.Row="0" PlaceholderText="Full Name:" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" x:Name="txt_fullname" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                    <TextBox Grid.Column="0" Grid.Row="1" PlaceholderText="Phone: " BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="txt_phone" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                    <TextBox Grid.Column="0" Grid.Row="2" PlaceholderText="Email: " BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="2" x:Name="txt_email" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                    <TextBox Grid.Column="0" Grid.Row="3" PlaceholderText="Birth Of Day: " BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="3" x:Name="txt_birthday" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                    <TextBox Grid.Column="0" Grid.Row="4" PlaceholderText="Address: " BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="4" x:Name="txt_address" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                    <TextBox Grid.Column="0" Grid.Row="5" PlaceholderText="Introduction: " BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,45,0"/>
-                    <TextBox Grid.Column="1" Grid.Row="5" x:Name="txt_intro" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
-                </Grid>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Họ và tên:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="txt_fullname"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Số điện thoại:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" x:Name="txt_phone" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Email:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" x:Name="txt_email" />
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Ngày sinh: " Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" x:Name="txt_birthday" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Địa chỉ:" Margin="0,0,45,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="MediumSeaGreen"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4" x:Name="txt_address"/>
+                    </Grid>
             </Grid>
         </StackPanel>
+        </Frame>
     </Grid>
 </Page>

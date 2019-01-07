@@ -1,4 +1,6 @@
-﻿using ManageStudentApp.Entity;
+﻿using ManageStudentApp.Dialog;
+using ManageStudentApp.Entity;
+using ManageStudentApp.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,31 +31,37 @@ namespace ManageStudentApp.View
     /// </summary>
     public sealed partial class Information : Page
     {
+      
         Student student = new Student();
         public Information()
         {
             this.InitializeComponent();
-            LoadStudentInformation();
+            this.InitializeComponent();
+            this.GetInfoUser();
+
         }
-        private async void LoadStudentInformation()
+
+        private async void Edit_Information(object sender, RoutedEventArgs e)
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "lMyHzmDDg4vQik4XAmaOap9fy9VsDbH1HP6TMdJUCh3NHexd4rib2ASn05rCPpPG");
-            var response = httpClient.GetAsync("");        // cần api
-            var content = await response.Result.Content.ReadAsStringAsync();
-            Debug.WriteLine(content);
-            student = JsonConvert.DeserializeObject<Student>(content);
-            Debug.WriteLine(student.email);
-            this.txt_fullname.Text = student.firstName + " " + student.lastName;
-            this.txt_phone.Text = student.phone;
-            this.txt_email.Text = student.email;
-            this.txt_birthday.Text = student.birthday;
-            this.txt_address.Text = student.address;
-            this.img_avatar.Source = new BitmapImage(new Uri(student.avatar, UriKind.Absolute));
+            var edit = new EditInformationDialog();
+            await edit.ShowAsync();
+           // this.Myframe.Navigate(typeof(MainPage));
         }
-        private void Go_Rigister(object sender, RoutedEventArgs e)
+
+      
+       
+        public async void GetInfoUser()
         {
-            this.Frame.Navigate(typeof(MainPage));
+            string content = await Handle.ReadFile("credential.txt");
+            TokenResponse member_token = JsonConvert.DeserializeObject<TokenResponse>(content);
+            
+            StudentWithRollnumber responseJsonMember = await APIHandle.GetInformation(member_token.AccessToken);
+            this.txt_fullname.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
+            this.rollNumber.Text = responseJsonMember.rollNumber;
+            this.txt_phone.Text = responseJsonMember.informations.phone;
+            this.txt_birthday.Text = responseJsonMember.informations.birthday.ToString("dd/MM/yyyy");
+            this.txt_email.Text = responseJsonMember.informations.email;
+            this.txt_address.Text = responseJsonMember.informations.address;
         }
     }
 }

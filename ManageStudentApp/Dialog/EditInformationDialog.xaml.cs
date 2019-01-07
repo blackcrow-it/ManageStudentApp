@@ -1,4 +1,5 @@
 ﻿using ManageStudentApp.Entity;
+using ManageStudentApp.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Capture;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,94 +24,88 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace ManageStudentApp
-{ 
-    public sealed partial class MainPage : Page
+namespace ManageStudentApp.Dialog
+{
+    public sealed partial class EditInformationDialog : ContentDialog
     {
-        //private static string API_GET_UPLOAD_URL;
         private string currentUploadUrl;
         private Student currentStudent;
         private StorageFile photo;
-        private string contents;
-        public MainPage()
+       // private string contents;
+        public EditInformationDialog()
         {
             this.currentStudent = new Student();
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-       }
-        private async void doSubmit_Click(object sender, RoutedEventArgs e)
-        {
+            Getinfo();
+        }
 
-            this.currentStudent.firstName = this.FirstName.Text;
-            this.currentStudent.lastName = this.LastName.Text;
+        private async void SubmitButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await storageFolder.GetFileAsync("credential.txt");
+            var content = await FileIO.ReadTextAsync(file);
+            TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(content);
+
+            HttpClient httpClient = new HttpClient();
+
             this.currentStudent.email = this.Email.Text;
             this.currentStudent.phone = this.Phone.Text;
-            this.currentStudent.middleName = this.PassWord.Password;
-            this.currentStudent.avatar = this.AvatarUrl.Text;
+            //this.currentStudent.avatar = this.AvatarUrl.Text;
             this.currentStudent.address = this.Address.Text;
+            string jsonUser = JsonConvert.SerializeObject(currentStudent);
 
-            string jsonStudent = JsonConvert.SerializeObject(this.currentStudent);
-            HttpClient httpClient = new HttpClient();
-            var content = new StringContent(jsonStudent, Encoding.UTF8, "application/json");
-            var response = httpClient.PostAsync(Service.APIUrl.CHANGE_INFORMATION, content);
-            var contents = await response.Result.Content.ReadAsStringAsync();
-            if (response.Result.StatusCode == HttpStatusCode.Created)
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + tokenResponse.AccessToken);
+            StringContent stringContent = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+            Debug.WriteLine("Thong tin thay doi " + jsonUser);
+            var response = httpClient.PostAsync(Service.APIUrl.CHANGE_INFORMATION, stringContent);
+            var responseText = await response.Result.Content.ReadAsStringAsync();
+            if (response.Result.StatusCode == HttpStatusCode.OK)
             {
-                //success
-                Debug.WriteLine("Login Success");
-                Debug.WriteLine(contents);
-                TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(contents); //read token
-                StorageFolder folder = ApplicationData.Current.LocalFolder;// save token file
-                StorageFile storageFile = await folder.CreateFileAsync("token.txt", CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(storageFile, contents);
+                MessageDialog messageDialog = new MessageDialog("Thay đổi thông tin thành công");
+                messageDialog.ShowAsync();
                 var rootFrame = Window.Current.Content as Frame;
                 rootFrame.Navigate(typeof(View.Information));
+                Debug.WriteLine("Change success!!!");
             }
             else
             {
-                ErrorResponse errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(contents);
-                if (errorResponse.error.Count > 0)
-                {
-                    foreach (var key in errorResponse.error.Keys)
-                    {
-                        var objectBykey = this.FindName(key);
-                        var value = errorResponse.error[key];
-                        if (objectBykey != null)
-                        {
-                            TextBlock textblock = objectBykey as TextBlock;
-                            textblock.Text = "* " + value;
-                            textblock.Visibility = Visibility.Visible;
-                        }
-                    }
-                }
+                Debug.WriteLine("Change fail " + response.Result.StatusCode);
             }
+
+        }
+        public async void Getinfo()
+        {
+            string content = await Handle.ReadFile("credential.txt");
+            TokenResponse member_token = JsonConvert.DeserializeObject<TokenResponse>(content);
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Basic " + member_token.AccessToken);
+            var response = client.GetAsync(APIUrl.MEMBER_INFORMATION);
+            Debug.WriteLine(response.Result.StatusCode);
+            var result = await response.Result.Content.ReadAsStringAsync();
+            StudentWithRollnumber responseJsonMember = JsonConvert.DeserializeObject<StudentWithRollnumber>(result);
+            this.Name.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
+            this.Email.Text = responseJsonMember.informations.email;
+            this.Phone.Text = responseJsonMember.informations.phone;
+            this.BirthdayPicker.Date = responseJsonMember.informations.birthday;
+            this.Address.Text = responseJsonMember.informations.address;
+          
         }
 
+        private void ResetButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            this.Phone.Text = string.Empty;
+            this.Email.Text = string.Empty;
+            this.Address.Text = string.Empty;
+        }
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton radio = sender as RadioButton;
             this.currentStudent.gender = Int32.Parse(radio.Tag.ToString());
         }
-
-        //private void BirthdayPicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
-        //{
-        //    this.currentStudent.birthday = BirthdayPicker.Date.Value.ToString("yyyy-MM-dd");
-        //}
-
-        private void doReset_Click(object sender, RoutedEventArgs e)
-        {
-            this.FirstName.Text = string.Empty;
-            this.LastName.Text = string.Empty;
-            this.Phone.Text = string.Empty;
-            this.Email.Text = string.Empty;
-            this.PassWord.Password = string.Empty;
-            this.AvatarUrl.Text = string.Empty;
-            this.Address.Text = string.Empty;
-            this.Introduction.Text = string.Empty;
-        }
-
+        
         private async void Choose_Image(object sender, RoutedEventArgs e)
         {
             CameraCaptureUI captureUI = new CameraCaptureUI();
@@ -163,8 +159,6 @@ namespace ManageStudentApp
                 Stream stream2 = wresp.GetResponseStream();
                 StreamReader reader2 = new StreamReader(stream2);
                 string imageUrl = reader2.ReadToEnd();
-                Avatar.Source = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
-                AvatarUrl.Text = imageUrl;
             }
             catch (Exception ex)
             {
@@ -180,7 +174,5 @@ namespace ManageStudentApp
                 wr = null;
             }
         }
-
-      
     }
 }

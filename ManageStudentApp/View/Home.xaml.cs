@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ManageStudentApp.Dialog;
+using ManageStudentApp.Service;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,45 +27,59 @@ namespace ManageStudentApp.View
         public Home()
         {
             this.InitializeComponent();
+            // string appName = Windows.ApplicationModel.Package.Current.DisplayName;
+            // AppTitle.Text = appName;
+
         }
-        //private void Nav_Menu_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    foreach (NavigationViewItemBase item in Nav_Menu.MenuItems)
-        //    {
-        //        if (item is NavigationViewItem && item.Tag.ToString() == "Home")
-        //        {
-        //            Nav_Menu.SelectedItem = item;
-        //            break;
-        //        }
-        //    }
-        //    Content_Header.Text = "Home";
-        //    contentFrame.Navigate(typeof(View.Home));
-        //}
-
-        private void Nav_Menu_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void Blog_Home(object sender, RoutedEventArgs e)
         {
-            TextBlock ItemContent = args.InvokedItem as TextBlock;
-            Debug.WriteLine(ItemContent.Tag);
-            if (ItemContent != null)
+            // set the initial SelectedItem
+            foreach (NavigationViewItemBase item in NavView.MenuItems)
             {
-                switch (ItemContent.Tag)
+                if (item is NavigationViewItem && item.Tag.ToString() == "Blog Home")
                 {
-                    case "Nav_Home":
-                        Content_Header.Text = "Home";
-                        contentFrame.Navigate(typeof(View.Login));
-                        break;
-
-                    case "Nav_Login":
-                        Content_Header.Text = "Login";
-                        contentFrame.Navigate(typeof(View.Login));
-                        break;
-
-                    case "Nav_Infor":
-                        Content_Header.Text = "Information";
-                        contentFrame.Navigate(typeof(MainPage));
-                        break;
+                    NavView.SelectedItem = item;
+                    break;
                 }
             }
+            ContentFrame.Navigate(typeof(View.BlogHome));
+        }
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                ContentFrame.Navigate(typeof(View.Home));
+            }
+            else
+            {
+                NavigationViewItem item = args.SelectedItem as NavigationViewItem;
+                switch (item.Tag.ToString())
+                {
+                  
+                    case "Information":
+                        ContentFrame.Navigate(typeof(View.Information));
+                        break;
+                    case "This_Class":
+                        ContentFrame.Navigate(typeof(View.TheClass));
+                        break;
+                    case "Subject":
+                        ContentFrame.Navigate(typeof(View.Subjects));
+                        break;
+                    
+                }
+            }
+        }
+        private async void Do_Password(object sender, RoutedEventArgs e)
+        {
+            var changePassword = new ChangePasswordDialog();
+            await changePassword.ShowAsync();
+        }
+
+        private async void Do_Logout(object sender, RoutedEventArgs e)
+        {
+            await Handle.WriteFile("credential.txt", "");
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(View.Login));
         }
     }
 }

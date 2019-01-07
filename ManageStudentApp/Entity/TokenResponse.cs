@@ -8,8 +8,8 @@ namespace ManageStudentApp.Entity
 {
     class TokenResponse
     {
-        private string _token;
+        private string _accessToken;
 
-        public string Token { get => _token; set => _token = value; }
+        public string AccessToken { get => _accessToken; set => _accessToken = value; }
     }
 }
