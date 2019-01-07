@@ -13,6 +13,7 @@ using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -64,6 +65,8 @@ namespace ManageStudentApp.View
                 //        //textBlock.FontStyle = FontStyle.Italic;
                 //    }
                 //}
+                MessageDialog messageDialog = new MessageDialog("Username hoặc mật khẩu chưa đúng, vui lòng nhập lại");
+                await messageDialog.ShowAsync();
                 Debug.WriteLine(httpResponseMessage.Result.StatusCode);
             }
             if (rememberCheck.IsChecked == true)

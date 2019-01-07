@@ -30,10 +30,10 @@
                 <RowDefinition Height="0.5*"></RowDefinition>
             </Grid.RowDefinitions>
             <SymbolIcon Symbol="OtherUser" HorizontalAlignment="Right" Grid.Row="0"/>
-            <TextBox x:Name="UserName" PlaceholderText="Tên tài khoản" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0"/>
+            <TextBox x:Name="UserName" PlaceholderText="Tên tài khoản" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="0" Width="400"/>
             <SymbolIcon Symbol="Permissions" HorizontalAlignment="Right" Grid.Row="1"/>
-            <PasswordBox x:Name="Password" PlaceholderText="Mật khẩu" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="1"/>
-            <CheckBox x:Name="rememberCheck" Content="Ghi nhớ đăng nhập" Grid.Row="2" Margin="2"/>
+            <PasswordBox x:Name="Password" PlaceholderText="Mật khẩu" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Grid.Row="1" Width="400"/>
+            <CheckBox x:Name="rememberCheck" Content="Ghi nhớ đăng nhập" Grid.Row="2" Margin="2" HorizontalAlignment="Center"/>
             <Button Content="Đăng nhập" HorizontalAlignment="Center" VerticalAlignment="Stretch" Foreground="AliceBlue" Background="MediumSeaGreen" Width="324" Grid.Row="3" Click="Button_submit" />
 
         </Grid>
