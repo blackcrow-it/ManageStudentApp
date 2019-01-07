@@ -30,18 +30,18 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Margin="50">
 
-                    <GridView ItemsSource="{x:Bind ListCourses}" x:Name="arraySongLocal" Foreground="{ThemeResource ListViewItemDragBackgroundThemeBrush}">
+                    <GridView ItemsSource="{x:Bind ListCourses}" x:Name="listCourses" Foreground="{ThemeResource ListViewItemDragBackgroundThemeBrush}">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="entity:Courses">
-                                <Grid Margin="0"  Tag="{Binding}">
+                                <Grid Margin="0"  Tag="{Binding}" Tapped="Courses_Tapped">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Rectangle Grid.Row="0" Height="150" Width="150" Margin="10" x:Name="thumnail">
-                                        <!--<Rectangle.Fill>
-                                            --><!--<ImageBrush ImageSource="{x:Bind thumnail}"/>--><!--
-                                        </Rectangle.Fill>-->
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="{x:Bind avarta}"/>
+                                        </Rectangle.Fill>
                                     </Rectangle>
                                     <StackPanel Grid.Row="1" Margin="10 0 10 0" Width="150" Height="80" HorizontalAlignment="Left">
                                         <TextBlock Grid.Row="0" Text="{x:Bind name}" FontSize="15" HorizontalAlignment="Left" TextWrapping="Wrap"/>

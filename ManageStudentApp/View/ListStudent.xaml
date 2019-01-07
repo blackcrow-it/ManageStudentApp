@@ -5,29 +5,73 @@
     xmlns:local="using:ManageStudentApp.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:entity="using:ManageStudentApp.Entity"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Margin="50" HorizontalAlignment="Center" >
-        <TextBlock Text="DANH SÁCH SINH VIÊN" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center"/>
-        <ListView  Margin="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <ListViewItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal" >
-                    <ListViewHeaderItem Margin="20, 10" >Tên</ListViewHeaderItem>
-                    <ListViewHeaderItem Margin="20, 10">Giới Tính</ListViewHeaderItem>
-                    <ListViewHeaderItem Margin="20, 10">Mã Sinh Viên</ListViewHeaderItem>
-                    <ListViewHeaderItem Margin="20, 10">Trạng Thái</ListViewHeaderItem>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch" Orientation="Horizontal" >
-                    <TextBox  x:Name="txt_email" BorderBrush="MediumSeaGreen"  BorderThickness="0,0,0,1.5" Margin="20, 10"/>
-                    <TextBox  x:Name="txt_rollNumber" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="20, 10"/>
-                    <TextBox  x:Name="txt_gender" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="20, 10"/>
-                    <TextBox  x:Name="txt_status" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="20, 10"/>
-                    
-                </StackPanel>
-            </ListViewItem>
+    <Grid HorizontalAlignment="Center" >
+        <Frame x:Name="MyFrame">
+        <StackPanel>
+        <Button Click="BackToList">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <SymbolIcon Symbol="Back" Grid.Column="0"/>
+                <TextBlock Grid.Column="1" Margin="10 0 0 0">Quay lại</TextBlock>
+            </Grid>
+        </Button>
+        <TextBlock Grid.Row="1" Text="DANH SÁCH SINH VIÊN" Foreground="MediumSeaGreen" Style="{StaticResource BaseTextBlockStyle}" FontSize="25" HorizontalAlignment="Center" Margin="0 0 0 50"/>
+        <ListView Grid.Row="2" ItemsSource="{x:Bind ListStudentInClass}" x:Name="arraySong">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="entity:Student">
+                    <Grid Margin="10 15 20 15" Tag="{Binding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <PersonPicture VerticalAlignment="Top" Grid.Column="0" Margin="0 0 20 0" ProfilePicture="{x:Bind avatar}"/>
+                        <ScrollViewer Grid.Column="2" Height="100" Width="500">
+                            <TextBlock Text="{x:Bind address}" TextWrapping="Wrap"/>
+                        </ScrollViewer>
+                        <Grid Grid.Column="1" Margin="0 10 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold" TextWrapping="Wrap">
+                                <Run>Họ tên: </Run>
+                                <Run Text="{x:Bind firstName}"></Run>
+                                <Run Text="{x:Bind middleName}"></Run>
+                                <Run Text="{x:Bind lastName}"></Run>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" Foreground="Gray" Margin="0 10 0 0">
+                                            <Run>Giới tính: </Run>
+                                            <Run Text="{x:Bind gender}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="2" Foreground="Gray">
+                                            <Run>Email: </Run>
+                                            <Run Text="{x:Bind email}"/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="3" Foreground="Gray">
+                                <Run>Phone: </Run>
+                                <Run Text="{x:Bind phone}"/>
+                            </TextBlock>
+                            <!--<TextBlock Grid.Row="3" Text="{x:Bind link}" Visibility="Collapsed"/>-->
+                        </Grid>
+                        <!--<MediaElement  x:Name='playbackElement2' AutoPlay="False" Source="{x:Bind link}" Visibility= "Visible" AreTransportControlsEnabled="True" RelativePanel.Below="singer"	Width="470"  Height="470" />-->
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
+        </StackPanel>
+        </Frame>
     </Grid>
 </Page>

@@ -31,29 +31,27 @@ namespace ManageStudentApp.Dialog
     public sealed partial class EditInformationDialog : ContentDialog
     {
         private string currentUploadUrl;
-        private Student currentStudent;
         private StorageFile photo;
        // private string contents;
         public EditInformationDialog()
         {
-            this.currentStudent = new Student();
             this.InitializeComponent();
             Getinfo();
         }
 
         private async void SubmitButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            Dictionary<String, String> currentStudent = new Dictionary<string, string>();
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             StorageFile file = await storageFolder.GetFileAsync("credential.txt");
             var content = await FileIO.ReadTextAsync(file);
             TokenResponse tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(content);
 
             HttpClient httpClient = new HttpClient();
-
-            this.currentStudent.email = this.Email.Text;
-            this.currentStudent.phone = this.Phone.Text;
-            //this.currentStudent.avatar = this.AvatarUrl.Text;
-            this.currentStudent.address = this.Address.Text;
+            currentStudent.Add("newEmail", this.Email.Text);
+            currentStudent.Add("newPhone", this.Phone.Text);
+            currentStudent.Add("newAddress", this.Address.Text);
+            currentStudent.Add("newAvatar", this.Avatar.Text);
             string jsonUser = JsonConvert.SerializeObject(currentStudent);
 
             httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + tokenResponse.AccessToken);
@@ -64,13 +62,14 @@ namespace ManageStudentApp.Dialog
             if (response.Result.StatusCode == HttpStatusCode.OK)
             {
                 MessageDialog messageDialog = new MessageDialog("Thay đổi thông tin thành công");
-                messageDialog.ShowAsync();
-                var rootFrame = Window.Current.Content as Frame;
-                rootFrame.Navigate(typeof(View.Information));
+                await messageDialog.ShowAsync();
+                //var rootFrame = Window.Current.Content as Frame;
                 Debug.WriteLine("Change success!!!");
             }
             else
             {
+                MessageDialog messageDialog = new MessageDialog("Thay đổi thông tin không thành công");
+                await messageDialog.ShowAsync();
                 Debug.WriteLine("Change fail " + response.Result.StatusCode);
             }
 
@@ -87,11 +86,34 @@ namespace ManageStudentApp.Dialog
             var result = await response.Result.Content.ReadAsStringAsync();
             StudentWithRollnumber responseJsonMember = JsonConvert.DeserializeObject<StudentWithRollnumber>(result);
             this.Name.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
-            this.Email.Text = responseJsonMember.informations.email;
-            this.Phone.Text = responseJsonMember.informations.phone;
-            this.BirthdayPicker.Date = responseJsonMember.informations.birthday;
-            this.Address.Text = responseJsonMember.informations.address;
-          
+
+            if (responseJsonMember.informations.phone != null)
+            {
+                this.Phone.Text = responseJsonMember.informations.phone;
+            }
+
+            if (responseJsonMember.informations.email != null)
+            {
+                this.Email.Text = responseJsonMember.informations.email;
+            }
+
+            if (responseJsonMember.informations.address != null)
+            {
+                this.Address.Text = responseJsonMember.informations.address;
+            }
+
+            if (responseJsonMember.informations.avatar != null)
+            {
+                this.Avatar.Text = responseJsonMember.informations.avatar;
+            }
+            try
+            {
+                this.img_avatar.ProfilePicture = new BitmapImage(new Uri(responseJsonMember.informations.avatar, UriKind.Absolute));
+            }
+            catch
+            {
+
+            }
         }
 
         private void ResetButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -103,7 +125,6 @@ namespace ManageStudentApp.Dialog
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton radio = sender as RadioButton;
-            this.currentStudent.gender = Int32.Parse(radio.Tag.ToString());
         }
         
         private async void Choose_Image(object sender, RoutedEventArgs e)
@@ -172,6 +193,18 @@ namespace ManageStudentApp.Dialog
             finally
             {
                 wr = null;
+            }
+        }
+
+        private void ChangeAvatar(object sender, KeyRoutedEventArgs e)
+        {
+            try
+            {
+                this.img_avatar.ProfilePicture = new BitmapImage(new Uri(this.Avatar.Text, UriKind.Absolute));
+            }
+            catch
+            {
+
             }
         }
     }

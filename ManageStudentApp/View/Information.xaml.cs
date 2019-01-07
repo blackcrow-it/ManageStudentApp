@@ -58,10 +58,30 @@ namespace ManageStudentApp.View
             StudentWithRollnumber responseJsonMember = await APIHandle.GetInformation(member_token.AccessToken);
             this.txt_fullname.Text = responseJsonMember.informations.firstName + " " + responseJsonMember.informations.middleName + " " + responseJsonMember.informations.lastName;
             this.rollNumber.Text = responseJsonMember.rollNumber;
-            this.txt_phone.Text = responseJsonMember.informations.phone;
+            if (responseJsonMember.informations.phone != null)
+            {
+                this.txt_phone.Text = responseJsonMember.informations.phone;
+            }
+
+            if (responseJsonMember.informations.email != null)
+            {
+                this.txt_email.Text = responseJsonMember.informations.email;
+            }
+
+            if (responseJsonMember.informations.address != null)
+            {
+                this.txt_address.Text = responseJsonMember.informations.address;
+            }
+            try
+            {
+                this.img_avatar.ProfilePicture = new BitmapImage(new Uri(responseJsonMember.informations.avatar, UriKind.Absolute));
+            }
+            catch
+            {
+
+            }
             this.txt_birthday.Text = responseJsonMember.informations.birthday.ToString("dd/MM/yyyy");
-            this.txt_email.Text = responseJsonMember.informations.email;
-            this.txt_address.Text = responseJsonMember.informations.address;
+            
         }
     }
 }

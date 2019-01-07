@@ -104,6 +104,8 @@
     <Compile Include="Entity\Courses.cs" />
     <Compile Include="Entity\Credential.cs" />
     <Compile Include="Entity\ErrorResponse.cs" />
+    <Compile Include="Entity\Grades.cs" />
+    <Compile Include="Entity\Marks.cs" />
     <Compile Include="Entity\Student.cs" />
     <Compile Include="Entity\StudentWithRollnumber.cs" />
     <Compile Include="Entity\TokenResponse.cs" />

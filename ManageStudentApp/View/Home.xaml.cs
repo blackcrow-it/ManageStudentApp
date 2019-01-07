@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -42,7 +43,21 @@ namespace ManageStudentApp.View
                     break;
                 }
             }
+            //ContentFrame.Navigated += On_Navigated;
             ContentFrame.Navigate(typeof(View.BlogHome));
+            // Add keyboard accelerators for backwards navigation
+            var goBack = new KeyboardAccelerator { Key = VirtualKey.GoBack };
+            goBack.Invoked += BackInvoked;
+            this.KeyboardAccelerators.Add(goBack);
+
+            // ALT routes here
+            var altLeft = new KeyboardAccelerator
+            {
+                Key = VirtualKey.Left,
+                Modifiers = VirtualKeyModifiers.Menu
+            };
+            altLeft.Invoked += BackInvoked;
+            this.KeyboardAccelerators.Add(altLeft);
         }
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -68,6 +83,34 @@ namespace ManageStudentApp.View
                     
                 }
             }
+        }
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            On_BackRequested();
+        }
+        private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            On_BackRequested();
+            args.Handled = true;
+        }
+        private bool On_BackRequested()
+        {
+            if (!ContentFrame.CanGoBack)
+                return false;
+
+            // Don't go back if the nav pane is overlayed
+            if (NavView.IsPaneOpen &&
+                (NavView.DisplayMode == NavigationViewDisplayMode.Compact ||
+                 NavView.DisplayMode == NavigationViewDisplayMode.Minimal))
+                return false;
+
+            ContentFrame.GoBack();
+            return true;
+        }
+        private void On_Navigated(object sender, NavigationEventArgs e)
+        {
+            NavView.IsBackEnabled = ContentFrame.CanGoBack;
+            
         }
         private async void Do_Password(object sender, RoutedEventArgs e)
         {
